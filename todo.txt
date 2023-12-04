@@ -1,0 +1,7 @@
+- maybe first make a model that can guess the macronutrients of a dish just based on its name
+  - keep in mind even if done well this will not be super accuate
+  - could use a database with pure ingredients and have it guess based off that
+  - for values that we don't have maybe we could just label them like: high in protein, high in fats, low in carbs, ...
+  
+
+- After we have infromation we can then train the LLM for the recommendation system
