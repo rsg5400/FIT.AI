@@ -8,7 +8,7 @@ def miles_to_meters(miles):
     except:
         return 0
         
-API_KEY = 'AIzaSyAqUGuZe5tLuog68E-PRYVA9Xnmv4frNPw'
+API_KEY = 'Your api key here'
 map_client = googlemaps.Client(API_KEY)
 
 address = 'HUB-Robeson Center, University Park, PA'
@@ -22,7 +22,8 @@ business_list = []
 response = map_client.places_nearby(
     location=(lat, lng),
     radius=distance,
-    type='restaurant'
+    type='restaurant',
+    open_now=False
 )   
 
 business_list.extend(response.get('results'))
@@ -37,6 +38,7 @@ while next_page_token:
         location=(lat, lng),
         radius=distance,
         type='restaurant',
+        open_now=False,
         page_token=next_page_token
     )   
     business_list.extend(response.get('results'))
