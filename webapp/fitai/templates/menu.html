@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="bg-white p-8 rounded shadow-md w-3/5 mx-auto">
+                <h2 class="text-xl font-bold mb-4 text-center">{{ data['name'] }} Menu</h2>
+                <table class="border-separate [border-spacing:0.75rem] text-center">
+                        <tr class="row">
+                                <th class="col">Name</th>
+                                <th class="col">Calories</th>
+                                <th class="col">Fat</th>
+                                <th class="col">Carbs</th>
+                                <th class="col">Protein</th>
+                        </tr>
+                        {% for entry in data['menu'] %}
+                                {% if data['menu'][entry]['quality'] == 1 %}
+                                <tr title="{{ data['menu'][entry]['reason'] }}">
+                                        <td class="col bg-green-200">{{ data['menu'][entry]['item'] }}</td>
+                                        <td class="col bg-green-200">{{ data['menu'][entry]['nutrition']['cal'] }}</td>
+                                        <td class="col bg-green-200">{{ data['menu'][entry]['nutrition']['fat'] }}</td>
+                                        <td class="col bg-green-200">{{ data['menu'][entry]['nutrition']['carbs'] }}</td>
+                                        <td class="col bg-green-200">{{ data['menu'][entry]['nutrition']['protein'] }}</td>
+                                </tr>
+                                {% elif data['menu'][entry]['quality'] == 2 %}
+                                <tr title="{{ data['menu'][entry]['reason'] }}">
+                                        <td class="col bg-yellow-200">{{ data['menu'][entry]['item'] }}</td>
+                                        <td class="col bg-yellow-200">{{ data['menu'][entry]['nutrition']['cal'] }}</td>
+                                        <td class="col bg-yellow-200">{{ data['menu'][entry]['nutrition']['fat'] }}</td>
+                                        <td class="col bg-yellow-200">{{ data['menu'][entry]['nutrition']['carbs'] }}</td>
+                                        <td class="col bg-yellow-200">{{ data['menu'][entry]['nutrition']['protein'] }}</td>
+                                </tr>
+                                {% elif data['menu'][entry]['quality'] == 3 %}
+                                <tr title="{{ data['menu'][entry]['reason'] }}">
+                                        <td class="col bg-red-200">{{ data['menu'][entry]['item'] }}</td>
+                                        <td class="col bg-red-200">{{ data['menu'][entry]['nutrition']['cal'] }}</td>
+                                        <td class="col bg-red-200">{{ data['menu'][entry]['nutrition']['fat'] }}</td>
+                                        <td class="col bg-red-200">{{ data['menu'][entry]['nutrition']['carbs'] }}</td>
+                                        <td class="col bg-red-200">{{ data['menu'][entry]['nutrition']['protein'] }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                        <td class="col">{{ data['menu'][entry]['item'] }}</td>
+                                        <td class="col">{{ data['menu'][entry]['nutrition']['cal'] }}</td>
+                                        <td class="col">{{ data['menu'][entry]['nutrition']['fat'] }}</td>
+                                        <td class="col">{{ data['menu'][entry]['nutrition']['carbs'] }}</td>
+                                        <td class="col">{{ data['menu'][entry]['nutrition']['protein'] }}</td>
+                                </tr>
+                                {% endif %}
+                                </tr>
+                        {% endfor %}
+                </table>
+        </div>
+{% endblock %}

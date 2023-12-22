@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-4xl font-bold text-center mb-4">Local Restaurants</h1>
+        <div class="bg-white p-8 rounded shadow-md w-3/5 mx-auto">
+                <h2 class="text-xl font-bold mb-4">Please choose:</h2>
+                <ul>
+                        {% for restaurant in data %}
+                        <li class="mt-4 mx-auto text-center">
+                                <a href="{{ url_for('menu', restaurant_id=data[restaurant]['id']) }}">{{ data[restaurant]['name'] }}</a>
+                        </li>
+                        {% endfor %}
+                </ul>
+        </div>
+{% endblock %}

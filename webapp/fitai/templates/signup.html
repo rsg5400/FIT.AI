@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-4xl font-bold text-center mb-4">New User Registration</h1>
+        <div class="bg-white p-8 rounded shadow-md w-3/5 mx-auto">
+            <form method="post" action="{{ url_for('create_user') }}">
+                {{ form.hidden_tag() }}
+                
+                <h2 class="text-2xl font-bold mb-4">Account Information</h2>
+                <div class="mt-4">
+                    {{ form.username.label }} {{ form.username(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.password.label }} {{ form.password(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.confirm_password.label }} {{ form.confirm_password(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.confirm_password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <hr class="mt-4">
+                <h2 class="text-2xl font-bold mb-4">Personal Information</h2>
+                <div>
+                    {{ form.first_name.label }} {{ form.first_name(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.first_name.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.birthdate.label }} {{ form.birthdate(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.birthdate.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.height.label }} {{ form.height(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.height.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.weight.label }} {{ form.weight(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.weight.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="mt-2">
+                    {{ form.sex.label }}
+                    {{ form.sex(class_="radio") }}
+                    {% for error in form.sex.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="mt-2">
+                    {{ form.fitness_goal.label }}
+                    {{ form.fitness_goal(class_="radio") }}
+                    {% for error in form.fitness_goal.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="mt-4 text-center">
+                    <input type="submit" value="Sign Up" class="bg-gray-800 text-white font-semibold py-2 px-4 rounded-full mx-auto">
+                </div>
+            </form>
+        </div>
+{% endblock %}

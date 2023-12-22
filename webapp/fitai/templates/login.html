@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-4xl font-bold text-center mb-4">User Login</h1>
+        <div class="bg-white p-8 rounded shadow-md w-3/5 mx-auto">
+            <form method="post" action="{{ url_for('login') }}">
+                {{ form.hidden_tag() }}
+                
+                <h2 class="text-2xl font-bold mb-4">Account Information</h2>
+                <div class="mt-4">
+                    {{ form.username.label }} {{ form.username(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.password.label }} {{ form.password(size=20,class="border border-gray-300 p-2 rounded-md w-full") }}
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="mt-4 text-center">
+                    <input type="submit" value="Login" class="bg-gray-800 text-white font-semibold py-2 px-4 rounded-full mx-auto">
+                </div>
+            </form>
+        </div>
+{% endblock %}

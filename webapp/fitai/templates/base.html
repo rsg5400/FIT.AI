@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      /* Additional CSS */
+      html,
+      body {
+          height: 100%;
+      }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col">
+    <nav class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="logo">
+                <h1 class="text-xl font-semibold">Fit.AI</h1>
+                {% if current_user.is_authenticated %}
+                <h2 class="">Current User: {{ current_user.username }}</h2>
+                <a href="{{ url_for('logout') }}" class="hover:text-gray-300">Logout</a>
+                {% endif %}
+            </div>
+            <ul class="flex space-x-4">
+                <li><a href="{{ url_for("index") }}" class="hover:text-gray-300">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('restaurants') }}" class="hover:text-gray-300">Restaurants</a></li>
+                {% endif %}
+                <li><a href="#features" class="hover:text-gray-300">Features</a></li>
+                <li><a href="#about" class="hover:text-gray-300">About</a></li>
+                {% if not current_user.is_authenticated %}
+                <li><a href="{{ url_for('login') }}" class="bg-white text-gray-800 font-semibold px-4 py-2 rounded-full hover:bg-gray-200">Login</a></li>
+                <li><a href="{{ url_for('signup') }}" class="bg-white text-gray-800 font-semibold px-4 py-2 rounded-full hover:bg-gray-200">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="text-center mt-4">
+          {% for message in messages %}
+            <li class="text-lg text-red-500 font-bold">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <div class="container flex-grow mx-auto py-8 px-8">
+    {% block content %}{% endblock %}
+    </div>
+    <footer class="bg-gray-800 text-white py-4">
+      <div class="container mx-auto text-center">
+          <p>&copy; 2023 AthleanTech - All Rights Reserved.</p>
+          <div class="mt-2">
+              <a href="#" class="inline-block mx-2 hover:text-gray-300">Terms of Service</a>
+              <a href="#" class="inline-block mx-2 hover:text-gray-300">Privacy Policy</a>
+              <a href="#" class="inline-block mx-2 hover:text-gray-300">Contact Us</a>
+          </div>
+      </div>
+    </footer>
+  </body>
+  </html>

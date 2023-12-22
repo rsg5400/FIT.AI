@@ -1,0 +1,28 @@
+# Python Cache Files
+.venv
+.cache
+__pycache__
+*.pyc
+.pytest_cache/
+
+# Apple trash
+.DS_Store
+
+# Flask Environment Variables
+# Create your own .env file in the fitai folder with the following variables:
+# 
+# FLASK_DEBUG=1
+# OPENAI_API_KEY="your key here"
+# SECRET_KEY="your key here"
+.env
+
+# VS Code Settings
+.vscode
+
+# Other Files
+instance/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
