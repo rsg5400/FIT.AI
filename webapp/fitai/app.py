@@ -3,7 +3,7 @@
 """
 
 import os
-from sqlite3 import DatabaseError
+import psycopg2
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -78,20 +78,21 @@ def create_user():
             sex = request.form['sex']
             fitness_goal = request.form['fitness_goal']
 
-            cur.execute("""INSERT INTO users (username,password,first_name,birthdate,
-                        height,weight,sex,fitness_goal) VALUES (?,?,?,?,?,?,?,?)""",
+            cur.execute("""INSERT INTO users(username,password,first_name,birthdate,
+                        height,weight,sex,fitness_goal) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);""",
                         (username,
-                            hashed_password,
-                            first_name,
-                            birthdate,
-                            height,
-                            weight,
-                            sex,
-                            fitness_goal))
+                        hashed_password,
+                        first_name,
+                        birthdate,
+                        height,
+                        weight,
+                        sex,
+                        fitness_goal))
             con.commit()
             print("User Creation Successful!")
-        except DatabaseError:
+        except psycopg2.Error as e:
             con.rollback()
+            print('Unable to connect!\n{0}').format(e)
             flash("User Creation Failed")
         return redirect(url_for('index'))
     return redirect('index')
@@ -106,7 +107,7 @@ def login():
         try:
             username = request.form['username']
             password = request.form['password']
-            cur.execute("""SELECT * FROM users WHERE username=?""",
+            cur.execute("""SELECT * FROM users WHERE username=%s""",
                                             (username,))
             user_data = cur.fetchone()
             user_obj = User(user_data)
@@ -116,8 +117,9 @@ def login():
             else:
                 flash('Incorrect Username or Password.')
                 return redirect(url_for('login'))
-        except DatabaseError:
+        except (psycopg2.Error, TypeError):
             flash("User Login Failed")
+            redirect(url_for('index'))
         return redirect(url_for('restaurants'))
     return render_template('login.html', form=form)
 
@@ -131,7 +133,7 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
     """Flask Login user loader"""
-    cur.execute('SELECT * FROM users WHERE id = ?', (user_id,))
+    cur.execute('SELECT * FROM users WHERE id = %s', (user_id,))
     user_data = cur.fetchone()
     if user_data:
         user = User(user_data)

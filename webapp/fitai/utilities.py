@@ -1,7 +1,7 @@
 # imports
 import os
 import json
-import sqlite3 as sql
+import psycopg2
 from openai import OpenAI
 from flask_login import current_user
 
@@ -36,8 +36,11 @@ def get_completion(user, item):
 
 def get_db_connection():
     """Method to connect to the database"""
-    con = sql.connect('database.db', check_same_thread=False)
-    con.row_factory = sql.Row
+    con = psycopg2.connect(
+        host=os.environ['DB_IP'],
+        database=os.environ['DB_NAME'],
+        user=os.environ['DB_USERNAME'],
+        password=os.environ['DB_PASSWORD'])
     return con
 
 def get_restaurants():
@@ -64,14 +67,14 @@ def get_restaurant_menu(in_restaurant_id):
         restaurant_id = 0
     with get_db_connection() as con:
         cur = con.cursor()
-        cur.execute('SELECT * FROM restaurants WHERE id = ?',(restaurant_id,))
+        cur.execute('SELECT * FROM restaurants WHERE id = %s',(restaurant_id,))
         restaurant_data = cur.fetchone()
         if restaurant_data:
             restaurant_menu = {
                 'id': restaurant_data[0],
                 'name': restaurant_data[2]
             }
-        cur.execute('SELECT * FROM fooditems WHERE restaurant_id = ?',(restaurant_id,))
+        cur.execute('SELECT * FROM fooditems WHERE restaurant_id = %s',(restaurant_id,))
         menu_data = cur.fetchall()
         if menu_data:
             restaurant_menu['menu'] = {}
